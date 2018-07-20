@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'riddles.apps.RiddlesConfig',
+    'bootstrap4',
+    'django_icons',
 ]
 
 MIDDLEWARE = [

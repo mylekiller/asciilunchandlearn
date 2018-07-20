@@ -1,0 +1,14 @@
+{% load static %}
+{% load bootstrap4 %}
+{% load icons %}
+<!DOCTYPE html>
+<html>
+    <head>
+        {% bootstrap_css %}
+        {% bootstrap_javascript jquery='full' %}
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+        {% block extra-css-js %}{% endblock extra-css-js %}
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    </head>
+    <body {% block body-class %}{% endblock body-class %}>{% block body %}{% endblock body %}</body>
+</html>
