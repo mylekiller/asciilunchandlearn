@@ -2,12 +2,13 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
-from .models import Question, Choice
+from .models import Question, Choice, Team
+from .forms import TeamSelectionForm
 
 
 def index(request):
-    latest_question_list = Question.objects.order_by('-pub_date')[:5]
-    context = {'latest_question_list': latest_question_list}
+    teamForm = TeamSelectionForm()
+    context = {'form': teamForm}
     return render(request, 'riddles/index.html', context)
 
 def detail(request, question_id):
@@ -36,3 +37,15 @@ def vote(request, question_id):
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
         return HttpResponseRedirect(reverse('riddles:results', args=(question.id,)))
+
+def show(request):
+    try:
+        team = Team.objects.get(pk=request.GET['teamNum'])
+    except (KeyError, Team.DoesNotExist):
+        teamForm = TeamSelectionForm()
+        return render(request, 'riddles/index.html', {
+            'form': teamForm,
+            'error_message': "You didn't enter a valid team number.",
+        })
+    else:
+        return render(request, 'riddles/show.html', {'team': team.team_number})

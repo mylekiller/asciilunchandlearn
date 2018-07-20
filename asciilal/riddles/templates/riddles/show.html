@@ -1,0 +1,16 @@
+{% extends "riddles/base.html" %}
+{% load static %}
+{% load bootstrap4 %}
+{% load icons %}
+
+{% block extra-css-js %}
+<link rel="stylesheet" type="text/css" href="{% static 'riddles/style.css' %}">
+{% endblock extra-css-js %}
+
+{% block body-class %}
+class="text-center"
+{% endblock body-class %}
+
+{% block body %}
+<p>{{team}}</p>
+{% endblock body %}
