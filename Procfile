@@ -1,1 +1,1 @@
-web: gunicorn asciilal/asciilal.wsgi --log-file -
+web: gunicorn asciilal.asciilal.wsgi --log-file -
