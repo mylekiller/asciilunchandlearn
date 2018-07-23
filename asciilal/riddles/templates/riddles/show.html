@@ -2,6 +2,7 @@
 {% load static %}
 {% load bootstrap4 %}
 {% load icons %}
+{% load riddles_extra %}
 
 {% block extra-css-js %}
 <link rel="stylesheet" type="text/css" href="{% static 'riddles/style.css' %}">
@@ -12,5 +13,175 @@ class="text-center"
 {% endblock body-class %}
 
 {% block body %}
-<p>{{team}}</p>
+<div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+    <header class="masthead mb-auto">
+        <div class="inner">
+        <h3 class="masthead-brand">Bits and Bytes</h3>
+        </div>
+    </header>
+
+    <main role="main" class="inner cover">
+        <h1 class="cover-heading">Team {{team_num}}</h1>
+        <p>Your Riddle is: </br>{{question.question_text|toHex}}</p>
+        <p class="lead">
+        <form action="{% url 'riddles:submit' team_num %}" method="get" class="form">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            {% buttons %}
+                <button type="submit" class="btn btn-primary">
+                    Submit
+                </button>
+            {% endbuttons %}
+        </form>
+        </p>
+        <p class="lead">{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}</p>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Character</th>
+                    <th scope="col">Hex (Base 16)</th>
+                    <th scope="col">Decimal (Base 10)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">a</th>
+                    <td>61<sub>16</sub></td>
+                    <td>97<sub>10</sub></td>
+                </tr>
+                <tr>
+                    <th scope="row">b</th>
+                    <td>62<sub>16</sub></td>
+                    <td>98<sub>10</sub></td>
+                </tr>
+                <tr>
+                    <th scope="row">c</th>
+                    <td>63<sub>16</sub></td>
+                    <td>99<sub>10</sub></td>
+                </tr>
+                <tr>
+                    <th scope="row">d</th>
+                    <td>64<sub>16</sub></td>
+                    <td>100<sub>10</sub></td>
+                </tr>
+                <tr>
+                    <th scope="row">e</th>
+                    <td>65<sub>16</sub></td>
+                    <td>101<sub>10</sub></td>
+                </tr>
+                <tr>
+                    <th scope="row">f</th>
+                    <td>66<sub>16</sub></td>
+                    <td>102<sub>10</sub></td>
+                </tr>
+                <tr>
+                    <th scope="row">g</th>
+                    <td>67<sub>16</sub></td>
+                    <td>103<sub>10</sub></td>
+                </tr>
+                <tr>
+                    <th scope="row">h</th>
+                    <td>68<sub>16</sub></td>
+                    <td>104<sub>10</sub></td>
+                </tr>
+                <tr>
+                    <th scope="row">i</th>
+                    <td>69<sub>16</sub></td>
+                    <td>105<sub>10</sub></td>
+                </tr>
+                <tr>
+                    <th scope="row">j</th>
+                    <td>6A<sub>16</sub></td>
+                    <td>106<sub>10</sub></td>
+                </tr>
+                <tr>
+                    <th scope="row">k</th>
+                    <td>6B<sub>16</sub></td>
+                    <td>107<sub>10</sub></td>
+                </tr>
+                <tr>
+                    <th scope="row">l</th>
+                    <td>6C<sub>16</sub></td>
+                    <td>108<sub>10</sub></td>
+                </tr>
+                <tr>
+                    <th scope="row">m</th>
+                    <td>6D<sub>16</sub></td>
+                    <td>109<sub>10</sub></td>
+                </tr>
+                <tr>
+                    <th scope="row">n</th>
+                    <td>6E<sub>16</sub></td>
+                    <td>110<sub>10</sub></td>
+                </tr>
+                <tr>
+                    <th scope="row">o</th>
+                    <td>6F<sub>16</sub></td>
+                    <td>111<sub>10</sub></td>
+                </tr>
+                <tr>
+                    <th scope="row">p</th>
+                    <td>70<sub>16</sub></td>
+                    <td>112<sub>10</sub></td>
+                </tr>
+                <tr>
+                    <th scope="row">q</th>
+                    <td>71<sub>16</sub></td>
+                    <td>113<sub>10</sub></td>
+                </tr>
+                <tr>
+                    <th scope="row">r</th>
+                    <td>72<sub>16</sub></td>
+                    <td>114<sub>10</sub></td>
+                </tr>
+                <tr>
+                    <th scope="row">s</th>
+                    <td>73<sub>16</sub></td>
+                    <td>115<sub>10</sub></td>
+                </tr>
+                <tr>
+                    <th scope="row">t</th>
+                    <td>74<sub>16</sub></td>
+                    <td>116<sub>10</sub></td>
+                </tr>
+                <tr>
+                    <th scope="row">u</th>
+                    <td>75<sub>16</sub></td>
+                    <td>117<sub>10</sub></td>
+                </tr>
+                <tr>
+                    <th scope="row">v</th>
+                    <td>76<sub>16</sub></td>
+                    <td>118<sub>10</sub></td>
+                </tr>
+                <tr>
+                    <th scope="row">w</th>
+                    <td>77<sub>16</sub></td>
+                    <td>119<sub>10</sub></td>
+                </tr>
+                <tr>
+                    <th scope="row">x</th>
+                    <td>78<sub>16</sub></td>
+                    <td>120<sub>10</sub></td>
+                </tr>
+                <tr>
+                    <th scope="row">y</th>
+                    <td>79<sub>16</sub></td>
+                    <td>121<sub>10</sub></td>
+                </tr>
+                <tr>
+                    <th scope="row">z</th>
+                    <td>7A<sub>16</sub></td>
+                    <td>122<sub>10</sub></td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+    <footer class="mastfoot mt-auto">
+        <div class="inner">
+        <p>Website Design by Bri and Kyle.</p>
+        </div>
+    </footer>
+</div>
 {% endblock body %}

@@ -1,42 +1,17 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
+from datetime import datetime
+import re
 
-from .models import Question, Choice, Team
-from .forms import TeamSelectionForm
+from .models import Question, Team
+from .forms import TeamSelectionForm, RiddleSubmissionForm
 
 
 def index(request):
     teamForm = TeamSelectionForm()
     context = {'form': teamForm}
     return render(request, 'riddles/index.html', context)
-
-def detail(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    context = {'question': question}
-    return render(request, 'riddles/detail.html', context)
-
-def results(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    return render(request, 'riddles/results.html', {'question': question})
-
-def vote(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    try:
-        selected_choice = question.choice_set.get(pk=request.POST['choice'])
-    except (KeyError, Choice.DoesNotExist):
-        # Redisplay the question voting form.
-        return render(request, 'riddles/detail.html', {
-            'question': question,
-            'error_message': "You didn't select a choice.",
-        })
-    else:
-        selected_choice.votes += 1
-        selected_choice.save()
-        # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from being posted twice if a
-        # user hits the Back button.
-        return HttpResponseRedirect(reverse('riddles:results', args=(question.id,)))
 
 def show(request):
     try:
@@ -48,4 +23,21 @@ def show(request):
             'error_message': "You didn't enter a valid team number.",
         })
     else:
-        return render(request, 'riddles/show.html', {'team': team.team_number})
+        form = RiddleSubmissionForm()
+        return render(request, 'riddles/show.html', {'team_num': team.team_number, 'question': team.question, 'form': form})
+
+def submit(request, team_number):
+    team = get_object_or_404(Team, pk=team_number)
+    question = team.question
+    if (question.answer == decode_string(request.GET.get('submission', ''))):
+        return render(request, 'riddles/success.html', {'success': "true", 'team': team_number, 'timestamp': datetime.now().strftime("%m-%d-%Y %H:%M:%S")})
+    else:
+        form = RiddleSubmissionForm()
+        return render(request, 'riddles/show.html', {'team_num': team.team_number, 'question': question, 'form': form, 'error_message': "Incorrect Answer Try Again!"})
+
+
+def decode_string(answer):
+    b = re.sub(r"[\D2-9]*", "", answer)
+    return bytes([int(b[i:i+8], 2) for i in range(0, len(b), 8)]).decode().strip()
+
+

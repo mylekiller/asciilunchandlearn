@@ -11,15 +11,10 @@ class Question(models.Model):
     def was_published_recently(self):
         return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
 
-class Choice(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    choice_text = models.CharField(max_length=1000)
-    votes = models.IntegerField(default=0)
-
-    def __str__(self):
-        return self.choice_text
-
 class Team(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     team_number = models.IntegerField(default=0)
     correct_date = models.DateTimeField('Date Answered Correct', default=None, blank=True, null=True)
+
+    def __str__(self):
+        return str(self.team_number)

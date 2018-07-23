@@ -12,34 +12,23 @@ class="text-center"
 {% endblock body-class %}
 
 {% block body %}
-<div class="cover-container d-flex p-3 mx-auto flex-column">
+<div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
     <header class="masthead mb-auto">
         <div class="inner">
         <h3 class="masthead-brand">Bits and Bytes</h3>
         </div>
     </header>
 
+    {% ifequal success "true" %}
     <main role="main" class="inner cover">
-        <h1 class="cover-heading">Please Enter Your Team Number</h1>
-        <p class="lead">
-        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-        <form action="{% url 'riddles:show' %}" method="get" class="form">
-            {% csrf_token %}
-            {% bootstrap_form form %}
-            {% buttons %}
-                <button type="submit" class="btn btn-primary">
-                    Submit
-                </button>
-            {% endbuttons %}
-        </form>
-        </p>
+        <h1 class="cover-heading">Congratulation Team {{team}} You have solved the Riddle!!!</h1>
+        <p class="lead">Your Time Stamp is: {{timestamp}}</p>
     </main>
-
     <footer class="mastfoot mt-auto">
         <div class="inner">
         <p>Website Design by Bri and Kyle.</p>
         </div>
     </footer>
+    {% endifequal %}
 </div>
-{% endblock body %}
-
+{% endblock %}
